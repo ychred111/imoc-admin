@@ -1,6 +1,5 @@
 <template>
-  <router-view to="">
-  </router-view>
+ <router-view></router-view>
 </template>
 
 <script setup>
