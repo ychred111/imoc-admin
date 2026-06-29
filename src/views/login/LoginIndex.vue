@@ -1,36 +1,56 @@
 <template>
   <div class="login-container">
-    <el-form class="login-form">
+    <el-form class="login-form" :model="loginForm" :rules="loginRules">
       <div class="title-container">
         <h3 class="title">用户登录</h3>
       </div>
       <!-- username -->
-      <el-form-item label="">
+      <el-form-item prop="username" label="">
         <span class="svg-container">
           <svg-icon icon="user"></svg-icon>
         </span>
-        <el-input placeholder="请输入username"></el-input>
+        <el-input
+          placeholder="请输入username"
+          v-model="loginForm.username"
+        ></el-input>
       </el-form-item>
 
       <!-- password -->
-
-      <el-form-item label="">
+      <el-form-item prop="password" label="">
         <div class="input-wrapper">
-          <span class=" svg-container icon-left ">
+          <span class="svg-container icon-left">
             <svg-icon icon="password"></svg-icon>
           </span>
-          <el-input placeholder="请输入password"></el-input>
-          <span class=" svg-container icon-right">
+          <el-input
+            placeholder="请输入password"
+            v-model="loginForm.password"
+          ></el-input>
+          <span class="svg-container icon-right">
             <svg-icon icon="eye"></svg-icon>
           </span>
         </div>
       </el-form-item>
+      <el-button type="primary" class="loginButton" >登录</el-button>
     </el-form>
   </div>
 </template>
 
 <script setup>
-// import SvgIcon from '@/components/SvgIcon/index.vue'
+import { ref } from 'vue'
+import { validatorPassword } from '@/utils/rules'
+// 创建数据源
+// 创建表单验证规则: 实际开发的时候密码的验证规则很复杂，需要单独封装
+
+const loginForm = ref({
+  username: 'super-admin',
+  password: '123456'
+})
+const loginRules = ref({
+  username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+  password: [
+    { required: true, trigger: 'blur', validator: validatorPassword() }
+  ]
+})
 </script>
 
 <style lang="scss" scoped>
@@ -156,6 +176,12 @@ $cursor: #fff;
     color: $dark_gray;
     cursor: pointer;
     user-select: none;
+  }
+  .loginButton {
+    width: 100%;
+    height: 50px;
+    margin-bottom: 30px;
+    font-size: 16px;
   }
 }
 </style>
