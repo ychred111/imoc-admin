@@ -18,15 +18,16 @@
       <!-- password -->
       <el-form-item prop="password" label="">
         <div class="input-wrapper">
-          <span class="svg-container icon-left">
+          <span class="svg-container icon-left" >
             <svg-icon icon="password"></svg-icon>
           </span>
           <el-input
             placeholder="请输入password"
             v-model="loginForm.password"
+            :type="passwordType"
           ></el-input>
           <span class="svg-container icon-right">
-            <svg-icon icon="eye"></svg-icon>
+            <svg-icon :icon="passwordType === 'password' ? 'eye' : 'eye-open'" @click="onChangePwType"></svg-icon>
           </span>
         </div>
       </el-form-item>
@@ -40,17 +41,30 @@ import { ref } from 'vue'
 import { validatorPassword } from '@/utils/rules'
 // 创建数据源
 // 创建表单验证规则: 实际开发的时候密码的验证规则很复杂，需要单独封装
-
 const loginForm = ref({
   username: 'super-admin',
   password: '123456'
 })
+
 const loginRules = ref({
   username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
   password: [
     { required: true, trigger: 'blur', validator: validatorPassword() }
   ]
 })
+
+// 密码框状态处理
+// template 里面绑定的方法，直接声明即可
+// 当passwordType的值是password的时候，改为text
+// 使用ref声明的数据时候，在script里面使用要加上value 在template里面使用时不需要
+const passwordType = ref('password')
+const onChangePwType = () => {
+  if (passwordType.value === 'password') {
+    passwordType.value = 'text'
+  } else {
+    passwordType.value = 'password'
+  }
+}
 </script>
 
 <style lang="scss" scoped>
