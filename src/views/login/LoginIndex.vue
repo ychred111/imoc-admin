@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <el-form class="login-form" :model="loginForm" :rules="loginRules">
+    <el-form class="login-form" :model="loginForm" :rules="loginRules" ref="loginFormRef">
       <div class="title-container">
         <h3 class="title">用户登录</h3>
       </div>
@@ -31,7 +31,7 @@
           </span>
         </div>
       </el-form-item>
-      <el-button type="primary" class="loginButton" >登录</el-button>
+      <el-button type="primary" class="loginButton" @click="handleLogin">登录</el-button>
     </el-form>
   </div>
 </template>
@@ -39,6 +39,8 @@
 <script setup>
 import { ref } from 'vue'
 import { validatorPassword } from '@/utils/rules'
+import { useStore } from 'vuex'
+// import { useRouter } from 'vue-router'
 // 创建数据源
 // 创建表单验证规则: 实际开发的时候密码的验证规则很复杂，需要单独封装
 const loginForm = ref({
@@ -64,6 +66,34 @@ const onChangePwType = () => {
   } else {
     passwordType.value = 'password'
   }
+}
+
+// 登录
+// 给登录按钮设置点击事件
+// 获取表单实例
+// 表单验证
+// 触发登录动作：发请求 因为login的请求是封装在vuex里面所以要触发定义的action
+// 登录之后的处理
+const loading = ref(false)
+const store = useStore()
+const loginFormRef = ref(null)
+const handleLogin = () => {
+  loginFormRef.value.validate(valid => {
+    if (!valid) return
+    loading.value = true
+    store.dispatch('user/login', loginForm.value)
+      .then(() => {
+        // 请求成功
+        loading.value = false
+        console.log('111')
+        // 登录成功之后的处理
+      })
+    // 请求失败
+      .catch((err) => {
+        console.log(err)
+        loading.value = false
+      })
+  })
 }
 </script>
 
