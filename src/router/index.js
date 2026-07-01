@@ -2,13 +2,18 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 
 const routes = [
   {
-    path: '/login',
-    component: () => import('@/views/login/LoginIndex.vue')
+    path: '/',
+    redirect: '@/layout/LayoutIndex.vue' // 根路径重定向
   },
   {
-    path: '/',
-    redirect: '/login' // 根路径重定向到登录页
+    path: '/login',
+    component: () => import('@/views/login/LoginIndex.vue')
   }
+  // {
+  //   path: '/layout',
+  //   component: () => import('@/views/layout/LayoutIndex.vue')
+  // }
+
 ]
 
 const router = createRouter({
