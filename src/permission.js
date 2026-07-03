@@ -20,8 +20,13 @@ const whiteList = ['/login']
 router.beforeEach(async (to, from, next) => {
   // 已经登录，不去login
   // 没登录，只能去login
-//   if (store.state.user.token) {
-  if (store.getter.token) {
+  // if (store.state.user.token) {
+  const lgoinToken = store.getters.token
+  console.log('=== 导航守卫 ===')
+  console.log('当前路径:', to.path)
+  console.log('token:', lgoinToken)
+  console.log('目标路径是否在白名单:', whiteList.includes(to.path))
+  if (lgoinToken) {
     if (to.path === '/login') {
       next('./')
     } else {
@@ -35,5 +40,5 @@ router.beforeEach(async (to, from, next) => {
       next('/login')
     }
   }
-  return false
+  // return false
 })
