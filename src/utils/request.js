@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { Promise } from 'core-js'
 import { ElMessage } from 'element-plus'
+import store from '@/store/index' // 导入 Vuex store，用来获取 token
+import { isCheckTimeOut } from '@/utils/auth'
 
 const service = axios.create({
   baseURL: '/api',
@@ -8,9 +10,41 @@ const service = axios.create({
 })
 
 // 请求拦截器
+// Axios 请求拦截器，在每次发送请求前自动把 token 添加到请求头中
+// 发送请求
+//     ↓
+// 请求拦截器拦截
+//     ↓
+// 检查 store 中是否有 token
+//     ↓
+// 有 token → 添加到请求头 Authorization: Bearer xxx
+//     ↓
+// 没有 token → 不添加
+//     ↓
+// 发送请求到后端
+//     ↓
+// 后端验证 token
+//     ↓
+// 返回数据
 service.interceptors.request.use(
+  // 请求发送之前处理函数
   (config) => {
+    // 注入 icode（固定值，用于平台标识）
     config.headers.icode = 'helloqianduanxunlianying'
+    // 在这个位置统一注入token
+    // 从 store 的 getters 中获取 token
+    if (store.getters.token) {
+      // 判断token是否超时
+      if (isCheckTimeOut()) {
+        // 登出
+        store.dispatch('user/logout')
+        return Promise.reject(new Error('token 失效'))
+      }
+      // 如果 token 存在，添加到请求头中
+      // Bearer 是标准的 token 认证方式
+      config.headers.Authorization = `Bearer ${store.getters.token}`
+    }
+    // 必须返回配置，否则请求无法继续
     return config // 必须返回配置
   },
   (error) => {
@@ -35,6 +69,10 @@ service.interceptors.response.use(
   },
   // 请求失败
   error => {
+    // token 过期登出
+    if (error.response && error.response.data && error.response.data.code === 401) {
+      store.dispatch('user.logout')
+    }
     ElMessage.error(error.message)
     return Promise.reject(new Error(error))
   }

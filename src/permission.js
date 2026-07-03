@@ -22,14 +22,19 @@ router.beforeEach(async (to, from, next) => {
   // 没登录，只能去login
   // if (store.state.user.token) {
   const lgoinToken = store.getters.token
-  console.log('=== 导航守卫 ===')
-  console.log('当前路径:', to.path)
-  console.log('token:', lgoinToken)
-  console.log('目标路径是否在白名单:', whiteList.includes(to.path))
+  // console.log('=== 导航守卫 ===')
+  // console.log('当前路径:', to.path)
+  // console.log('token:', lgoinToken)
+  // console.log('目标路径是否在白名单:', whiteList.includes(to.path))
   if (lgoinToken) {
     if (to.path === '/login') {
       next('./')
     } else {
+      // 判断用户资料是否获取
+      // 如果不存在就需要获取用户信息
+      if (!store.getters.hasUserInfo) {
+        await store.dispatch('user/getUserInfo')
+      }
       next()
     }
   } else {
