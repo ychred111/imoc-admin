@@ -8,6 +8,7 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import './styles/index.scss'
 import installIcon from './icons'
 import store from './store/index.js'
+import './permission.js' // 导入导航守卫
 
 const app = createApp(App)
 
