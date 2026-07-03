@@ -3,7 +3,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 const routes = [
   {
     path: '/',
-    redirect: '@/layout/LayoutIndex.vue' // 根路径重定向
+    component: () => import('@/views/layout/LayoutIndex.vue') // 根路径重定向
   },
   {
     path: '/login',
