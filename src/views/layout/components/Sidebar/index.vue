@@ -1,11 +1,15 @@
 <template>
- <div>SiderBar</div>
+  <div class="sidebar-container">
+    <h1>111</h1>
+    <el-scrollbar>
+      <sidebar-menu />
+    </el-scrollbar>
+  </div>
 </template>
 
-<script>
-export default {
-  name: 'SiderBar'
-}
+<script setup>
+import SidebarMenu from './SidebarMenu'
 </script>
+
 <style scoped lang='less'>
 </style>

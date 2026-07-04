@@ -6,6 +6,7 @@ function resolve (dir) {
   return path.join(__dirname, dir)
 }
 module.exports = defineConfig({
+  lintOnSave: false, // 直接关闭 ESLint 检查
   // webpack-dev-server提供的代理功能可以把所有请求到当前服务中的请求转发或者代理到另外的服务器上
   // 转译依赖
   devServer: {

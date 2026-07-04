@@ -13,6 +13,7 @@ module.exports = {
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'vue/multi-word-component-names': 'off',
     'space-before-function-paren': 1,
     quotes: 'warn', // 引号不规范时警告（你图中选的是这个）
     semi: 'error', // 分号不规范时报错
