@@ -214,8 +214,11 @@ export function generateMenus (routes, basePath = '') {
     let route = result.find(item => item.path === routePath)
     if (!route) {
       route = {
-        ...item,
+        // ...item,
+        // path: routePath,
+        // children: []
         path: routePath,
+        meta: item.meta || {},
         children: []
       }
     }

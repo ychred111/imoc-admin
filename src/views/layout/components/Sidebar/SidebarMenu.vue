@@ -1,4 +1,5 @@
   <template>
+     <!-- # 顶层菜单容器 -->
   <!-- 一级 menu 菜单 -->
   <el-menu
     :unique-opened="true"
@@ -7,23 +8,8 @@
     text-color="#fff"
     active-text-color="#ffd04b"
   >
-    <!-- 子集 menu 菜单 -->
-    <el-sub-menu index="1">
-      <template #title>
-        <!-- <i class="el-icon-location"></i> -->
-         <el-icon><Location /></el-icon>
-        <span>导航</span>
-      </template>
-      <el-menu-item index="1-1">选项1</el-menu-item>
-      <el-menu-item index="1-2">选项2</el-menu-item>
-    </el-sub-menu>
 
-    <!-- 具体菜单项 -->
-    <el-menu-item index="4">
-      <!-- <i class="el-icon-setting"></i> -->
-       <el-icon><Setting /></el-icon>
-      <template #title>导航四</template>
-    </el-menu-item>
+  <sidebar-item v-for="item in routes" :key="item.path" :route="item"> </sidebar-item>
   </el-menu>
 </template>
 
@@ -31,6 +17,7 @@
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { filterRouters, generateMenus } from '@/router/index'
+import SidebarItem from './SidebarItem.vue'
 
 const router = useRouter()
 const routes = computed(() => {
