@@ -17,6 +17,7 @@ module.exports = {
     'space-before-function-paren': 1,
     quotes: 'warn', // 引号不规范时警告（你图中选的是这个）
     semi: 'error', // 分号不规范时报错
-    indent: ['error', 2] // 缩进必须为2个空格，否则报错
+    indent: ['error', 2], // 缩进必须为2个空格，否则报错
+    'vue/comment-directive': 'off'
   }
 }

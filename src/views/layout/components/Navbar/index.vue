@@ -1,6 +1,9 @@
 <template>
   <div class="navbar">
+    <!-- 汉堡包 -->
     <Hamburger class="hamburger-container"></Hamburger>
+    <!-- 面包屑 -->
+     <breadcrumbs class="breadcrumbs-container"></breadcrumbs>
     <div class="right-menu">
 
       <!-- 头像 -->
@@ -35,6 +38,7 @@
 <script >
 import { useStore } from 'vuex'
 import Hamburger from '@/components/Hamburger/index.vue'
+import Breadcrumbs from '@/components/Breadcrumbs/index.vue'
 export default {
   name: 'NavBar'
 }
@@ -65,6 +69,10 @@ const logout = () => {
    &:hover {
     background: rgba(0,0,0,0.1);
    }
+}
+
+.breadcrumbs-container {
+  float: left;
 }
 }
 
