@@ -8,6 +8,7 @@
     :text-color="$store.getters.cssVar.menuText"
     :active-text-color="$store.getters.cssVar.menuActiveText"
     router
+    :collapse="!$store.getters.sidebarOpened"
   >
     <sidebar-item v-for="item in routes" :key="item.path" :route="item">
     </sidebar-item>

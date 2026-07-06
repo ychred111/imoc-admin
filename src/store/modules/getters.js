@@ -7,7 +7,8 @@ const getter = {
     return JSON.stringify(state.user.userInfo) !== '{}'
   },
   userInfo: state => state.user.userInfo,
-  cssVar: state => variables
+  cssVar: state => variables,
+  sidebarOpened: state => state.app.sidebarOpened // 创建快捷访问，方便各组件直接读取
 }
 
 export default getter
