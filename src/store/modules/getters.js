@@ -8,7 +8,8 @@ const getter = {
   },
   userInfo: state => state.user.userInfo,
   cssVar: state => variables,
-  sidebarOpened: state => state.app.sidebarOpened // 创建快捷访问，方便各组件直接读取
+  sidebarOpened: state => state.app.sidebarOpened, // 创建快捷访问，方便各组件直接读取
+  language: state => state.app.language
 }
 
 export default getter

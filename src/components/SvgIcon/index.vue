@@ -3,7 +3,7 @@
      <div v-if="isExternal" :style="styleExternalIcon" class="svg-external-icon svg-icon" :class="className"></div>
 
     <!-- 展示内部图标 -->
-     <svg v-else class="svg-icon" :class="className" aria-hidden="true">
+     <svg  v-else class="svg-icon" :class="className" aria-hidden="true">
         <use :xlink:href="iconName"></use>
      </svg>
 </template>
@@ -21,7 +21,7 @@ const props = defineProps({
   // 图标类名
   className: {
     type: String,
-    required: true
+    default: ''
   }
 
 })

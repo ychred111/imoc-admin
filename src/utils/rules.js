@@ -1,7 +1,9 @@
+import i18n from '@/i8n'
+
 export const validatorPassword = () => {
-  return (rules, value, callback) => {
-    if (value.length < 6) {
-      callback(new Error('密码不能小于6位数'))
+  return (rules, values, callback) => {
+    if (values.length < 6) {
+      callback(new Error(i18n.global.t('msg.login.password')))
     } else {
       callback()
     }

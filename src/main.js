@@ -9,6 +9,7 @@ import './styles/index.scss'
 import installIcon from './icons'
 import store from './store/index.js'
 import './permission.js' // 导入导航守卫
+import i18n from './i8n/index.js'
 
 const app = createApp(App)
 
@@ -18,6 +19,10 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 }
 installIcon(app)
 
+// 注册
 app.use(router)
 app.use(store)
+app.use(i18n) // ✅ 注册 i18n
+
+// 挂载
 app.mount('#app')

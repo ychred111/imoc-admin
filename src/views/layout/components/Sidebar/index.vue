@@ -8,6 +8,7 @@
       />
       <h1 class="logo-title" v-if="$store.getters.sidebarOpened">
         imooc-admin
+         <!-- {{ $t('msg.test') }} -->
       </h1>
     </div>
     <el-scrollbar>

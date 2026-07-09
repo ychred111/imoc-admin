@@ -8,11 +8,11 @@
       >
         <!-- 不可点击项 -->
         <span v-if="index === breadcrumbsData.length - 1" class="no-redirect">
-          {{ item.meta.title }}
+          {{  generateTitle (item.meta.title)  }}
         </span>
         <!-- 可点击项 -->
         <a href="#" v-else class="redirect" @click.prevent="onClick(item)">
-          {{ item.meta.title }}
+          {{ generateTitle (item.meta.title)}}
         </a>
       </el-breadcrumb-item>
     </transition-group>
@@ -24,6 +24,7 @@ import router from '@/router'
 import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
+import { generateTitle } from '@/utils/i18n'
 
 // 用户访问页面 → 路由变化 → 自动更新面包屑数据 → 展示在导航栏
 const route = useRoute()

@@ -1,8 +1,14 @@
 <template>
   <div class="login-container">
-    <el-form class="login-form" :model="loginForm" :rules="loginRules" ref="loginFormRef">
+    <el-form
+      class="login-form"
+      :model="loginForm"
+      :rules="loginRules"
+      ref="loginFormRef"
+    >
       <div class="title-container">
-        <h3 class="title">用户登录</h3>
+        <h3 class="title">{{ $t('msg.login.title') }}</h3>
+        <lang-select class="lang-select"></lang-select>
       </div>
       <!-- username -->
       <el-form-item prop="username" label="">
@@ -18,7 +24,7 @@
       <!-- password -->
       <el-form-item prop="password" label="">
         <div class="input-wrapper">
-          <span class="svg-container icon-left" >
+          <span class="svg-container icon-left">
             <svg-icon icon="password"></svg-icon>
           </span>
           <el-input
@@ -27,11 +33,17 @@
             :type="passwordType"
           ></el-input>
           <span class="svg-container icon-right">
-            <svg-icon :icon="passwordType === 'password' ? 'eye' : 'eye-open'" @click="onChangePwType"></svg-icon>
+            <svg-icon
+              :icon="passwordType === 'password' ? 'eye' : 'eye-open'"
+              @click="onChangePwType"
+            ></svg-icon>
           </span>
         </div>
       </el-form-item>
-      <el-button type="primary" class="loginButton" @click="handleLogin">登录</el-button>
+      <el-button type="primary" class="loginButton" @click="handleLogin">{{
+        $t('msg.login.loginBtn')
+      }}</el-button>
+      <div class="tips" v-html="$t('msg.login.desc')"></div>
     </el-form>
   </div>
 </template>
@@ -40,6 +52,9 @@
 import { ref } from 'vue'
 import { validatorPassword } from '@/utils/rules'
 import { useStore } from 'vuex'
+import { useI18n } from 'vue-i18n'
+import LangSelect from '@/components/LangSelect/index.vue'
+const i18n = useI18n()
 // import { useRouter } from 'vue-router'
 // 创建数据源
 // 创建表单验证规则: 实际开发的时候密码的验证规则很复杂，需要单独封装
@@ -49,7 +64,10 @@ const loginForm = ref({
 })
 
 const loginRules = ref({
-  username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+  username: [
+    { message: i18n.t('msg.login.usernameRule') },
+    { required: true, message: '请输入用户名', trigger: 'blur' }
+  ],
   password: [
     { required: true, trigger: 'blur', validator: validatorPassword() }
   ]
@@ -78,17 +96,18 @@ const loading = ref(false)
 const store = useStore()
 const loginFormRef = ref(null)
 const handleLogin = () => {
-  loginFormRef.value.validate(valid => {
+  loginFormRef.value.validate((valid) => {
     if (!valid) return
     loading.value = true
-    store.dispatch('user/login', loginForm.value)
+    store
+      .dispatch('user/login', loginForm.value)
       .then(() => {
         // 请求成功
         loading.value = false
         console.log('111')
         // 登录成功之后的处理
       })
-    // 请求失败
+      // 请求失败
       .catch((err) => {
         console.log(err)
         loading.value = false
@@ -220,6 +239,17 @@ $cursor: #fff;
     color: $dark_gray;
     cursor: pointer;
     user-select: none;
+  }
+
+  .lang-select {
+    position: absolute;
+    top: 4px;
+    right: 0;
+    background-color: #fff;
+    font-size: 22px;
+    padding: 4px;
+    border-radius: 4px;
+    cursor: pointer;
   }
   .loginButton {
     width: 100%;

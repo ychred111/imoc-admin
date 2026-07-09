@@ -2,11 +2,12 @@
   <!-- # 菜单标题渲染组件（图标+文字） -->
   <i v-if="icon.includes('el-icon')" class='su-el-icon' :class="icon"></i>
   <svg-icon v-else :icon="icon" className="menu-icon"></svg-icon>
-  <span>{{ title }}</span>
+  <span>{{ generateTitle(title) }}</span>
 </template>
 
 <script setup>
 import { defineProps } from 'vue'
+import { generateTitle } from '@/utils/i18n'
 defineProps({
   title: {
     type: String,
