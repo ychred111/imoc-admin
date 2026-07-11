@@ -25,17 +25,18 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { filterRouters, generateMenus } from '@/router/index'
 import { useRouter } from 'vue-router'
 import Fuse from 'fuse.js'
 import { generateRoutes } from '@/compositions/HeaderSearch/FuseData'
+import { watchSwitchLang } from '@/utils/i18n'
 
 // 被检索的页面就是左边菜单的页面，检索的数据源就是：左边菜单对应的数据源 在路由的时候有处理
 const router = useRouter()
 
 // 数据库
-const searchPool = computed(() => {
+let searchPool = computed(() => {
   const filterRoutes = filterRouters(router.getRoutes())
   console.log(generateMenus(filterRoutes))
   return generateRoutes(filterRoutes)
@@ -43,24 +44,28 @@ const searchPool = computed(() => {
 console.log(searchPool)
 
 // 搜索库相关
-const fuse = new Fuse(searchPool.value, {
+let fuse
+const initFuse = searchPool => {
+  fuse = new Fuse(searchPool, {
   // 配置：
   // 是否按优先级进行排序，搜索结果按匹配度从高到低排序，匹配度越高的结果排在越前面
-  shouldSort: true,
-  // 最小匹配字符长度，最少输入多少个字符才触发搜索，设为 1 表示输入 1 个字符就开始搜索，建议值：1-3
-  minMatchCharLength: 1,
-  // keys 权重配置：搜索的键及权重配置
-  keys: [
-    {
-      name: 'title', // 搜索 title 字段
-      weight: 0.7 // 权重 70%
-    },
-    {
-      name: 'path', // 搜索 path 字段
-      weight: 0.3 // 权重 30%
-    }
-  ]
-})
+    shouldSort: true,
+    // 最小匹配字符长度，最少输入多少个字符才触发搜索，设为 1 表示输入 1 个字符就开始搜索，建议值：1-3
+    minMatchCharLength: 1,
+    // keys 权重配置：搜索的键及权重配置
+    keys: [
+      {
+        name: 'title', // 搜索 title 字段
+        weight: 0.7 // 权重 70%
+      },
+      {
+        name: 'path', // 搜索 path 字段
+        weight: 0.3 // 权重 30%
+      }
+    ]
+  })
+}
+initFuse(searchPool.value)
 
 // el-select 属性备注:
 // filterable:可输入文字进行过滤筛选
@@ -122,6 +127,32 @@ const onSelectChange = (val) => {
   //   console.log('onSelectChange')
   router.push(val.path)
 }
+
+// 关闭search的
+const onClose = () => {
+  // 失焦的时候触发
+  HeaderSearchSelectRef.value.blur()
+  isShow.value = false
+  searchOptions.value = []
+}
+
+// 监听search 的打开的时候，给整个body设置事件onClose，监听search关闭，移除 onClose事件
+watch(isShow, val => {
+  if (val) {
+    document.body.addEventListener('click', onClose)
+  } else {
+    document.body.removeEventListener('click', onClose)
+  }
+})
+
+watchSwitchLang(() => {
+  searchPool = computed(() => {
+    const filterRoutes = filterRouters(router.getRoutes())
+    console.log(generateMenus(filterRoutes))
+    return generateRoutes(filterRoutes)
+  })
+  initFuse(searchPool.value)
+})
 </script>
 
 <style lang="scss" scoped>
