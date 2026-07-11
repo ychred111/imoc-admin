@@ -2,11 +2,16 @@
   <div class="navbar">
     <!-- 汉堡包 -->
     <Hamburger class="hamburger-container"></Hamburger>
+
     <!-- 面包屑 -->
     <breadcrumbs class="breadcrumbs-container"></breadcrumbs>
+
     <div class="right-menu">
+      <!-- 语言国际化 自定义主题 头像 -->
       <theme-pick class="right-menu-item hover-effect"></theme-pick>
-       <lang-select class="right-menu-item hover-effect" />
+      <lang-select class="right-menu-item hover-effect" />
+      <screen-full class="right-menu-item hover-effect" ></screen-full>
+
       <!-- 头像 -->
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
@@ -42,6 +47,7 @@ import Hamburger from '@/components/Hamburger/index.vue'
 import Breadcrumbs from '@/components/Breadcrumbs/index.vue'
 import LangSelect from '@/components/LangSelect/index.vue'
 import ThemePick from '@/components/ThemeSelect/index.vue'
+import ScreenFull from '@/components/ScreenFull/index.vue'
 const store = useStore()
 // 登出
 const logout = () => {
@@ -105,5 +111,9 @@ const logout = () => {
       margin-right: 12px;
     }
   }
+}
+
+.test-borde{
+  border: 2px solid red !important;
 }
 </style>
