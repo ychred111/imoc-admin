@@ -14,10 +14,10 @@
         placeholder="search"
       >
         <el-option
-          v-for="options in 5"
-          :key="options"
-          :label="options"
-          :value="options"
+          v-for="options in searchOptions"
+          :key="options.item.path"
+          :label="options.item.title.join(' > ')"
+          :value="options.item"
         >
         </el-option>
       </el-select>
@@ -107,14 +107,20 @@ const onShowClick = () => {
 // 搜索方法
 // 远程搜索方法，输入时触发 querySearch 函数
 const search = ref('')
+const searchOptions = ref([])
 const querySearch = query => {
-  console.log(fuse.search(query))
+  if (query !== '') {
+    searchOptions.value = fuse.search(query)
+  } else {
+    searchOptions.value = []
+  }
 }
 
 // 选中回调
 // 选中选项时触发 onSelectChange 函数
-const onSelectChange = () => {
-  console.log('onSelectChange')
+const onSelectChange = (val) => {
+  //   console.log('onSelectChange')
+  router.push(val.path)
 }
 </script>
 
