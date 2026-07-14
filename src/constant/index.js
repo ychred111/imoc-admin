@@ -13,3 +13,5 @@ export const LANG = 'language'
 export const MAIN_COLOR = 'main-color'
 // 默认主题色
 export const DEFAULT_COLOR = '#409eff'
+// tags 定义存储标签页数据的 localStorage 键名
+export const TAGS_VIEW = 'tagsView'

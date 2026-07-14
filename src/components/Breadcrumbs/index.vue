@@ -35,7 +35,7 @@ const getDreadcrumbsData = () => {
   breadcrumbsData.value = route.matched.filter(
     (item) => item.meta && item.meta.title
   )
-  console.log(breadcrumbsData.value)
+  // console.log(breadcrumbsData.value)
 }
 
 const onClick = (item) => {

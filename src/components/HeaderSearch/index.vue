@@ -41,7 +41,7 @@ let searchPool = computed(() => {
   console.log(generateMenus(filterRoutes))
   return generateRoutes(filterRoutes)
 })
-console.log(searchPool)
+// console.log(searchPool)
 
 // 搜索库相关
 let fuse
