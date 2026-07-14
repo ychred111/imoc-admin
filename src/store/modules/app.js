@@ -5,7 +5,7 @@ export default {
   state: () => ({
     sidebarOpened: true,
     language: getItem(LANG) || 'zh',
-    tagsViewList: getItem(TAGS_VIEW) || [] // 从 localStorage 恢复标签页
+    tagsViewList: getItem(TAGS_VIEW) // 从 localStorage 恢复标签页
   }),
   mutations: {
     triggerSidebarOpened (state) {
@@ -18,6 +18,7 @@ export default {
     },
     // 添加tags 添加标签页
     addTagsViewList (state, tag) {
+      console.log('🔍 添加 tag:', tag)
       if (!tag || !tag.path) {
         return
       }
@@ -46,8 +47,30 @@ export default {
       setItem(TAGS_VIEW, state.tagsViewList)
     },
     // 关闭 tags 页面事件
-    removeTagsView () {
-      console.log(111)
+    /**
+     * 删除 tag
+     * @param {type: 'other'||'right'||'index', index: index} payload
+     */
+    removeTagsView (state, payload) {
+      if (payload.type === 'index') {
+        console.log('index')
+        state.tagsViewList.splice(payload.index, 1)
+        return
+      } else if (payload.type === 'other') {
+        console.log('other')
+        state.tagsViewList.splice(
+          payload.index + 1,
+          state.tagsViewList.length - payload.index + 1
+        )
+        state.tagsViewList.splice(0, payload.index)
+      } else if (payload.type === 'right') {
+        console.log('right')
+        state.tagsViewList.splice(
+          payload.index + 1,
+          state.tagsViewList.length - payload.index + 1
+        )
+      }
+      setItem(TAGS_VIEW, state.tagsViewList)
     }
   },
   actions: {}

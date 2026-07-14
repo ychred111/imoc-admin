@@ -1,6 +1,11 @@
 <template>
   <div class="app-main">
-    <router-view>
+    <router-view v-slot="{ Component, route }">
+      <transition name="fade-transform" mode="out-in">
+        <keep-alive>
+          <component :is="Component" :key="route.path" />
+        </keep-alive>
+      </transition>
     </router-view>
   </div>
 </template>
@@ -25,6 +30,7 @@ const getTitle = route => {
     title = pathArr[pathArr.length - 1]
   } else {
     title = generateTitle(route.meta.title)
+    console.log('🔍 getTitle 返回:', title)
   }
   return title
 }

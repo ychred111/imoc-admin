@@ -1,5 +1,5 @@
 <template>
-  <div class="tags-view-container">
+  <div class="tags-view-container"  v-if="tagsViewList && tagsViewList.length > 0">
     <el-scrollbar class="tags-view-wrapper">
       <router-link
         class="tags-view-item"
@@ -8,7 +8,7 @@
           backgroundColor: isActive(tag) ? $store.getters.cssVar.menuBg : '',
           borderColor: isActive(tag) ? $store.getters.cssVar.menuBg : ''
         }"
-        v-for="(tag, index) in $store.getters.tagsViewList"
+        v-for="(tag, index) in tagsViewList"
         :key="tag.fullPath"
         :to="{ path: tag.fullPath }"
          @contextmenu.prevent="openMenu($event, index)"
@@ -32,22 +32,32 @@
 <script setup>
 import { useRoute } from 'vue-router'
 import ContextMenu from './ContextMenu.vue'
-import { ref } from 'vue'
-// import { useStore } from 'vuex'
+import { ref, computed, watch } from 'vue'
+import { useStore } from 'vuex'
+
+const store = useStore()
+
 const route = useRoute()
 // 是否被选中
 const isActive = (tag) => {
   return tag.path === route.path// 当前路由匹配时高亮
 }
 
+const tagsViewList = computed(() => {
+  const list = store.getters.tagsViewList
+  return list || []
+})
 // 关闭
-// const store = useStore()
 const onCloseClick = index => {
-
+  console.log(333)
+  store.commit('app/removeTagsView', {
+    type: 'index',
+    index: index
+  })
 }
 // 鼠标右键
 const visible = ref(false)
-const selectIndex = ref()
+const selectIndex = ref(0)
 const menuStyle = ref({
   left: 0,
   top: 0
@@ -58,6 +68,22 @@ const openMenu = (e, index) => {
   menuStyle.value.top = y + 'px'
   visible.value = true
 }
+
+/**
+ * 关闭 menu
+ */
+const closeMenu = () => {
+  visible.value = false
+}
+
+// 监听变化
+watch(visible, val => {
+  if (val) {
+    document.body.addEventListener('click', closeMenu)
+  } else {
+    document.body.removeEventListener('click', closeMenu)
+  }
+})
 
 </script>
 <style lang="scss" scoped>
