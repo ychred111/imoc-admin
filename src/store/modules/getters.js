@@ -18,7 +18,8 @@ const getter = {
   },
   sidebarOpened: state => state.app.sidebarOpened, // 创建快捷访问，方便各组件直接读取
   language: state => state.app.language,
-  mainColor: state => state.theme.mainColor
+  mainColor: state => state.theme.mainColor,
+  tagsViewList: state => state.app.tagsViewList
 }
 
 export default getter

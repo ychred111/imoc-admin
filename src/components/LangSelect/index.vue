@@ -50,10 +50,10 @@ const language = computed(() => store.getters.language)
 const i18n = useI18n()
 // 切换 语言
 const handleSetLanguage = lang => {
-  console.log('点击切换的语言:', lang)
+  // console.log('点击切换的语言:', lang)
   i18n.locale.value = lang
   store.commit('app/setLanguage', lang)
-  console.log('store 中的 language:', store.getters.language)
+  // console.log('store 中的 language:', store.getters.language)
   ElMessage.success(i18n.t('msg.toast.switchLangSuccess'))
 }
 </script>

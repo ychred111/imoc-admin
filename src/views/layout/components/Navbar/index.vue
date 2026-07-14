@@ -2,10 +2,8 @@
   <div class="navbar">
     <!-- 汉堡包 -->
     <Hamburger class="hamburger-container"></Hamburger>
-
     <!-- 面包屑 -->
     <breadcrumbs class="breadcrumbs-container"></breadcrumbs>
-
     <div class="right-menu">
       <!-- 语言国际化 自定义主题 头像 -->
       <header-search class="right-menu-item hover-effect"></header-search>
