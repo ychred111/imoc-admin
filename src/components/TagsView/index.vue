@@ -11,6 +11,7 @@
         v-for="(tag, index) in $store.getters.tagsViewList"
         :key="tag.fullPath"
         :to="{ path: tag.fullPath }"
+         @contextmenu.prevent="openMenu($event, index)"
       >
         {{ tag.title }}
         <svg-icon
@@ -30,7 +31,9 @@
 
 <script setup>
 import { useRoute } from 'vue-router'
-import { useStore } from 'vuex'
+import ContextMenu from './ContextMenu.vue'
+import { ref } from 'vue'
+// import { useStore } from 'vuex'
 const route = useRoute()
 // 是否被选中
 const isActive = (tag) => {
@@ -38,12 +41,22 @@ const isActive = (tag) => {
 }
 
 // 关闭
-const store = useStore()
+// const store = useStore()
 const onCloseClick = index => {
-  store.commit('app/removeTagsView', {
-    type: 'index',
-    index: index
-  })
+
+}
+// 鼠标右键
+const visible = ref(false)
+const selectIndex = ref()
+const menuStyle = ref({
+  left: 0,
+  top: 0
+})
+const openMenu = (e, index) => {
+  const { x, y } = e
+  menuStyle.value.left = x + 'px'
+  menuStyle.value.top = y + 'px'
+  visible.value = true
 }
 
 </script>
