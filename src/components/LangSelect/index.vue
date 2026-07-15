@@ -9,7 +9,7 @@
       <div>
         <el-tooltip :effect="effect" :content="$t('msg.navBar.lang')">
           <span>
-          <svg-icon focusable="false" style="font-size: 24px; margin-top: 5px;" icon="language"></svg-icon>
+          <svg-icon id="guide-lang" focusable="false" style="font-size: 24px; margin-top: 5px;" icon="language"></svg-icon>
           </span>
         </el-tooltip>
       </div>

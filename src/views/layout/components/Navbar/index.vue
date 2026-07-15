@@ -3,9 +3,10 @@
     <!-- 汉堡包 -->
     <Hamburger class="hamburger-container"></Hamburger>
     <!-- 面包屑 -->
-    <breadcrumbs class="breadcrumbs-container"></breadcrumbs>
+    <breadcrumbs id="guide-breadcrumb" class="breadcrumbs-container"></breadcrumbs>
     <div class="right-menu">
       <!-- 语言国际化 自定义主题 头像 -->
+      <guide class="right-menu-item hover-effect"></guide>
       <header-search class="right-menu-item hover-effect"></header-search>
       <theme-pick class="right-menu-item hover-effect"></theme-pick>
       <lang-select class="right-menu-item hover-effect" />
@@ -48,6 +49,7 @@ import LangSelect from '@/components/LangSelect/index.vue'
 import ThemePick from '@/components/ThemeSelect/index.vue'
 import ScreenFull from '@/components/ScreenFull/index.vue'
 import HeaderSearch from '@/components/HeaderSearch/index.vue'
+import Guide from '@/components/Guide/index.vue'
 const store = useStore()
 // 登出
 const logout = () => {

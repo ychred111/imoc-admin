@@ -1,13 +1,13 @@
 <template>
   <div class="app-wrapper" :class="[$store.getters.sidebarOpened ? 'openSidebar' : 'hideSidebar']">
     <!-- 左边 meun -->
-    <sidebar class="sidebar-container" id="guied-sidebar" :style="{backgroundColor: $store.getters.cssVar.menuBg}"> </sidebar>
+    <sidebar  class="sidebar-container" id="guide-sidebar" :style="{backgroundColor: $store.getters.cssVar.menuBg}"> </sidebar>
     <div class="main-container">
       <div class="fixed-header">
         <!-- 顶部 Navbar-->
         <navbar></navbar>
         <!-- tags -->
-         <tags-view></tags-view>
+         <tags-view id="guide-tags"></tags-view>
       </div>
       <!-- 内容区域 -->
       <app-main></app-main>
