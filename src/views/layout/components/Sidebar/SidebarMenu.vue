@@ -26,7 +26,7 @@ const routes = computed(() => {
   const fRoutes = filterRouters(router.getRoutes())
   return generateMenus(fRoutes)
 })
-console.log(JSON.stringify(routes.value))
+// console.log(JSON.stringify(routes.value))
 
 // 高亮 menu
 const route = useRoute()

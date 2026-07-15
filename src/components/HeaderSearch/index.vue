@@ -38,7 +38,7 @@ const router = useRouter()
 // 数据库
 let searchPool = computed(() => {
   const filterRoutes = filterRouters(router.getRoutes())
-  console.log(generateMenus(filterRoutes))
+  // console.log(generateMenus(filterRoutes))
   return generateRoutes(filterRoutes)
 })
 // console.log(searchPool)

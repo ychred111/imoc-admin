@@ -18,7 +18,7 @@ export default {
     },
     // 添加tags 添加标签页
     addTagsViewList (state, tag) {
-      console.log('🔍 添加 tag:', tag)
+      // console.log('🔍 添加 tag:', tag)
       if (!tag || !tag.path) {
         return
       }
