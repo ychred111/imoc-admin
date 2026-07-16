@@ -44,18 +44,19 @@ service.interceptors.request.use(
       // Bearer 是标准的 token 认证方式
       config.headers.Authorization = `Bearer ${store.getters.token}`
     }
+    // 配置接口数据国际化
+    config.headers['Accept-Language'] = store.getters.language
     // 必须返回配置，否则请求无法继续
     return config // 必须返回配置
   },
   (error) => {
     return Promise.reject(error)
   }
-
 )
 
 // 响应拦截器
 service.interceptors.response.use(
-  response => {
+  (response) => {
     const { success, message, data } = response.data
     // 判断当前请求是否成功
     if (success) {
@@ -68,9 +69,13 @@ service.interceptors.response.use(
     }
   },
   // 请求失败
-  error => {
+  (error) => {
     // token 过期登出
-    if (error.response && error.response.data && error.response.data.code === 401) {
+    if (
+      error.response &&
+      error.response.data &&
+      error.response.data.code === 401
+    ) {
       store.dispatch('user.logout')
     }
     ElMessage.error(error.message)

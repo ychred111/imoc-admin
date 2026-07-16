@@ -1,5 +1,6 @@
 import { LANG, TAGS_VIEW } from '@/constant'
 import { getItem, setItem } from '@/utils/storage'
+
 export default {
   namespaced: true,
   state: () => ({
@@ -72,6 +73,7 @@ export default {
       }
       setItem(TAGS_VIEW, state.tagsViewList)
     }
+
   },
   actions: {}
 }
