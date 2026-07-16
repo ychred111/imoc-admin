@@ -10,6 +10,7 @@ import installIcon from './icons'
 import store from './store/index.js'
 import './permission.js' // 导入导航守卫
 import i18n from './i8n/index.js'
+import installFilters from './filters'
 
 const app = createApp(App)
 
@@ -23,6 +24,7 @@ installIcon(app)
 app.use(router)
 app.use(store)
 app.use(i18n) // ✅ 注册 i18n
+installFilters(app) //  注册过滤器插件
 
 // 挂载
 app.mount('#app')
