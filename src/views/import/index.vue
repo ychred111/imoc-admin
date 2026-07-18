@@ -1,9 +1,10 @@
 <template>
-  <div class="">导入</div>
+<upload-excel :onSuccess="onSuccess"></upload-excel>
 </template>
 
 <script setup>
-import {} from 'vue'
+import { } from 'vue'
+import UploadExcel from '@/components/UploadExcel/index.vue'
 </script>
 
 <style lang="scss" scoped></style>

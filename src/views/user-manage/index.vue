@@ -4,8 +4,8 @@
     <!-- 卡片1   导入导出按钮-->
     <el-card class="haeder">
       <div>
-        <el-button type="info">{{ $t('msg.excel.importExcel') }}</el-button>
-        <el-button type="success">{{ $t('msg.excel.exportExcel') }}</el-button>
+        <el-button type="info" @click="onImportExcelClick">{{ $t('msg.excel.importExcel') }}</el-button>
+        <el-button type="success" >{{ $t('msg.excel.exportExcel') }}</el-button>
       </div>
     </el-card>
 
@@ -96,6 +96,7 @@
 import { ref } from 'vue'
 import { getUserManageList } from '@/api/user-manage'
 import { watchSwitchLang } from '@/utils/i18n'
+import { useRouter } from 'vue-router'
 
 // 页面加载
 //     ↓
@@ -135,7 +136,13 @@ getListData()
 watchSwitchLang(getListData)
 
 const handleSizeChange = () => {}
-const handleCurrentChange = () => {}
+const handleCurrentChange = () => { }
+
+// 导入
+const router = useRouter()
+const onImportExcelClick = () => {
+  router.push('/user/import')
+}
 </script>
 
 <style lang="scss" scoped>
