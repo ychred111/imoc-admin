@@ -93,7 +93,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onActivated } from 'vue'
 import { getUserManageList } from '@/api/user-manage'
 import { watchSwitchLang } from '@/utils/i18n'
 import { useRouter } from 'vue-router'
@@ -134,9 +134,16 @@ const getListData = async () => {
 getListData()
 
 watchSwitchLang(getListData)
+onActivated(getListData)
 
-const handleSizeChange = () => {}
-const handleCurrentChange = () => { }
+const handleSizeChange = (currentSize) => {
+  size.value = currentSize
+  getListData()
+}
+const handleCurrentChange = (currentPage) => {
+  page.value = currentPage
+  getListData()
+}
 
 // 导入
 const router = useRouter()

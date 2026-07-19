@@ -36,10 +36,16 @@
 </template>
 
 <script setup>
-import XLSX from 'xlsx'
 import { defineProps, ref } from 'vue'
 import { getHeaderRow, isExcel } from './utils'
 import { ElMessage } from 'element-plus'
+
+const XLSX = require('xlsx')
+
+console.log('XLSX 对象:', XLSX)
+console.log('XLSX 类型:', typeof XLSX)
+console.log('XLSX.version:', XLSX?.version)
+
 // 用户点击上传 →
 // 选择 .xlsx/.xls 文件 →
 // 可选的前置校验 (beforeUpload) →
@@ -53,6 +59,8 @@ const props = defineProps({
   beforeUpload: Function,
   onSuccess: Function
 })
+
+// console.log('XLSX 方法:', Object.keys(XLSX)
 
 const excelUploadInput = ref(null)
 // 点击触发上传

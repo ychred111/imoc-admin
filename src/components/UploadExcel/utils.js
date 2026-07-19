@@ -1,4 +1,4 @@
-import XLSX from 'xlsx'
+const XLSX = require('xlsx')
 
 /*
 * 获取表头（通用方式）
@@ -21,7 +21,7 @@ export const getHeaderRow = sheet => {
   return headers
 }
 
-// excel 文件格式校验
+// excel
 export const isExcel = file => {
   return /\.(xlsx|xls|csv)$/.test(file.name)
 }
