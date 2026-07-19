@@ -14,6 +14,15 @@
       @change="handleChange"
     />
     <!-- https://developer.mozilla.org/zh-CN/docs/Web/API/HTML_Drag_and_Drop_API -->
+    <!--
+    用户拖拽文件 → dragenter 触发（进入区域）
+     ↓
+    文件在区域内移动 → dragover 持续触发（多次）
+     ↓
+    用户释放文件 → drop 触发（释放文件）
+     ↓
+    handleDrop 获取文件 → 执行上传
+     -->
     <div
       class="drop"
       @drop.stop.prevent="handleDrop"
@@ -29,7 +38,8 @@
 <script setup>
 import XLSX from 'xlsx'
 import { defineProps, ref } from 'vue'
-import { getHeaderRow } from './utils'
+import { getHeaderRow, isExcel } from './utils'
+import { ElMessage } from 'element-plus'
 // 用户点击上传 →
 // 选择 .xlsx/.xls 文件 →
 // 可选的前置校验 (beforeUpload) →
@@ -143,8 +153,46 @@ const readerData = (rawFiles) => {
 const generateData = (excelData) => {
   props.onSuccess && props.onSuccess(excelData)
 }
-const handleDrop = () => {}
-const handleDragover = () => {}
+
+// 1. 模板部分（拖拽区域） ← 当前分析
+//    ↓ 触发事件
+// 2. handleDrop / handleDragover ← 当前分析
+//    ↓ 调用
+// 3. upload 函数（之前分析）
+//    ↓ 调用
+// 4. readerData 函数（之前分析）
+//    ↓ 使用
+// 5. XLSX 解析 + getHeaderRow（之前分析）
+//    ↓ 回调
+// 6. generateData → props.onSuccess
+// 拖拽上传
+/* 拖拽文本释放时触发 */
+const handleDrop = (e) => {
+  // 上传中跳过 如果正在上传中，忽略新的拖拽操作，防止重复上传
+  if (loading.value) return
+  //   获取拖拽的文件列表
+  const files = e.dataTransfer.files
+  //   检查是否只有一个文件，否则提示错误
+  if (files.length !== 1) {
+    ElMessage.error('必须有一个文件')
+    return
+  }
+  // 取第一个文件
+  const rawFile = files[0]
+  //   文件格式校验
+  if (!isExcel(rawFile)) {
+    ElMessage.error('文件必须是 .xlsx, .xls, .csv 格式')
+    return false
+  }
+
+  // 触发上传事件 通过校验后，调用上传函数
+  upload(rawFile)
+}
+/* 拖拽悬停时触发 */
+const handleDragover = (e) => {
+  // 在新位置生成源项的副本
+  e.dataTransfer.dropEffect = 'copy'
+}
 </script>
 
 <style lang="scss" scoped>

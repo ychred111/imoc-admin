@@ -20,3 +20,8 @@ export const getHeaderRow = sheet => {
   }
   return headers
 }
+
+// excel 文件格式校验
+export const isExcel = file => {
+  return /\.(xlsx|xls|csv)$/.test(file.name)
+}
