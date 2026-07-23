@@ -11,6 +11,8 @@ import store from './store/index.js'
 import './permission.js' // 导入导航守卫
 import i18n from './i8n/index.js'
 import installFilters from './filters'
+import print from 'vue3-print-nb'
+import installDirectives from '@/directives'
 
 const app = createApp(App)
 
@@ -19,9 +21,10 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
 installIcon(app)
-
+installDirectives(app)
 // 注册
 app.use(router)
+app.use(print)
 app.use(store)
 app.use(i18n) // ✅ 注册 i18n
 installFilters(app) //  注册过滤器插件

@@ -11,7 +11,6 @@
       <div id="userInfoBox" class="user-info-box">
         <!-- 标题 -->
         <h2 class="title">{{ $t('msg.userInfo.title') }}</h2>
-
         <!-- 头部 -->
         <div class="header">
           <!-- 头部渲染表格 -->
@@ -110,6 +109,25 @@ const getUserDetail = async () => {
 getUserDetail()
 // 语言切换
 watchSwitchLang(getUserDetail)
+
+// 打印
+const printLoading = ref(false)
+// 创建打印对象
+const printObj = {
+  // 打印区域，要打印的dom
+  id: 'userInfoBox', // 要打印区域的 id
+  // 打印标题
+  popTitle: '打印标题', // 打印页眉
+  // 打印前
+  beforeOpenCallback () {
+    printLoading.value = true
+  },
+  // 执行打印
+  openCallback () {
+    printLoading.value = false
+  }
+}
+
 </script>
 
 <style lang="scss" scoped>
