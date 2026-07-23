@@ -25,3 +25,17 @@ export const deleteUser = id => {
     url: `/user-manage/detele/${id}`
   })
 }
+
+// 获取收用户列表的数据
+export const getUserManageAllList = () => {
+  return request({
+    url: '/user-manage/all-list'
+  })
+}
+
+// 获取用户详情
+export const userDetail = (id) => {
+  return request({
+    url: `/user-manage/detail/${id}`
+  })
+}

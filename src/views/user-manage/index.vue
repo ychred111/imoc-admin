@@ -3,7 +3,7 @@
     <!-- 结构 两个卡片上下排布  -->
     <!-- 卡片1   导入导出按钮-->
     <el-card class="haeder">
-      <div>
+      <div class="haeder-box" >
         <el-button type="info" @click="onImportExcelClick">{{ $t('msg.excel.importExcel') }}</el-button>
         <el-button type="success" @click="onTExcelClick" >{{ $t('msg.excel.exportExcel') }}</el-button>
       </div>
@@ -65,7 +65,7 @@
               @click="onShowClick(row._id)"
               >{{ $t('msg.excel.show') }}</el-button
             >
-            <el-button type="info" size="small" @click="onShowClick(row._id)">{{
+            <el-button type="info" size="small" @click="onClick(row._id)">{{
               $t('msg.excel.showRole')
             }}</el-button>
             <el-button
@@ -132,7 +132,7 @@ const getListData = async () => {
   tableData.value = res.list
   total.value = res.total
 
-  console.log(res)
+  // console.log(res)
 }
 
 getListData()
@@ -180,6 +180,10 @@ const exportToExcelVisible = ref(false)
 const onTExcelClick = () => {
   exportToExcelVisible.value = true
 }
+
+const onShowClick = (id) => {
+  router.push(`/user/info/${id}`)
+}
 </script>
 
 <style lang="scss" scoped>
@@ -187,6 +191,10 @@ const onTExcelClick = () => {
   .header {
     margin-bottom: 22px;
     text-align: right;
+  }
+  .haeder-box {
+  display: flex;
+  justify-content: flex-end;
   }
   :deep(.avatar) {
     width: 50px;
