@@ -5,7 +5,7 @@
     <el-card class="haeder">
       <div>
         <el-button type="info" @click="onImportExcelClick">{{ $t('msg.excel.importExcel') }}</el-button>
-        <el-button type="success" >{{ $t('msg.excel.exportExcel') }}</el-button>
+        <el-button type="success" @click="onTExcelClick" >{{ $t('msg.excel.exportExcel') }}</el-button>
       </div>
     </el-card>
 
@@ -16,7 +16,7 @@
         <el-table-column label="#" type="index"> </el-table-column>
 
         <!-- 姓名 -->
-        <el-table-column :label="$t('msg.excel.name')" prop="username">
+        <el-table-column prop="username" :label="$t('msg.excel.name')">
         </el-table-column>
 
         <!-- 手机 -->
@@ -70,7 +70,7 @@
             <el-button
               type="danger"
               size="small"
-              @click="onShowClick(row._id)"
+              @click="onRemoveClick(row)"
               >{{ $t('msg.excel.remove') }}</el-button
             >
           </template>
@@ -94,9 +94,12 @@
 
 <script setup>
 import { ref, onActivated } from 'vue'
-import { getUserManageList } from '@/api/user-manage'
+import { getUserManageList, deleteUser } from '@/api/user-manage'
 import { watchSwitchLang } from '@/utils/i18n'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+
+import { ElMessageBox, ElMessage } from 'element-plus'
 
 // 页面加载
 //     ↓
@@ -150,6 +153,27 @@ const router = useRouter()
 const onImportExcelClick = () => {
   router.push('/user/import')
 }
+
+// 删除用户
+const i18n = useI18n()
+const onRemoveClick = row => {
+  // 删除前提示
+  ElMessageBox.confirm(
+    i18n.t('msg.excel.dialogTitle1') +
+      row.username +
+      i18n.t('msg.excel.dialogTitle2'),
+    {
+      type: 'warning'
+    }
+
+  ).then(async () => { // 点击确认之后进入 .then
+    await deleteUser(row._id)
+    ElMessage.success(i18n.t('msg.excel.removeSuccess'))
+    // 重新渲染数据
+    getListData()
+  })
+}
+
 </script>
 
 <style lang="scss" scoped>
