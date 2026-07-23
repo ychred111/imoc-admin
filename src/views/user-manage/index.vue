@@ -8,6 +8,7 @@
         <el-button type="success" @click="onTExcelClick" >{{ $t('msg.excel.exportExcel') }}</el-button>
       </div>
     </el-card>
+    <export-to-excel v-model="exportToExcelVisible" ></export-to-excel>
 
     <!-- 卡片2 table 7列 -->
     <el-card>
@@ -98,8 +99,8 @@ import { getUserManageList, deleteUser } from '@/api/user-manage'
 import { watchSwitchLang } from '@/utils/i18n'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-
 import { ElMessageBox, ElMessage } from 'element-plus'
+import ExportToExcel from './components/Export2Excel.vue'
 
 // 页面加载
 //     ↓
@@ -174,6 +175,11 @@ const onRemoveClick = row => {
   })
 }
 
+// 导出
+const exportToExcelVisible = ref(false)
+const onTExcelClick = () => {
+  exportToExcelVisible.value = true
+}
 </script>
 
 <style lang="scss" scoped>

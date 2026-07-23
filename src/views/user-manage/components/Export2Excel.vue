@@ -12,7 +12,7 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="closed">{{ $t('msg.excel.close') }}</el-button>
-        <el-button type="primary" @click="onConfirm">{{ $t('msg.excel.confirm') }}</el-button>
+        <el-button type="info" @click="onConfirm">{{ $t('msg.excel.confirm') }}</el-button>
       </span>
     </template>
   </el-dialog>
