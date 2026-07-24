@@ -49,6 +49,6 @@ import TagsView from '@/components/TagsView/index.vue'
 }
 
 .sidebar-container {
-  background-color: pink;
+  background-color: gray;
 }
 </style>

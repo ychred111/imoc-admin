@@ -65,7 +65,7 @@
               @click="onShowClick(row._id)"
               >{{ $t('msg.excel.show') }}</el-button
             >
-            <el-button type="info" size="small" @click="onClick(row._id)">{{
+            <el-button type="info" size="small" @click="onShowRoleClick(row)">{{
               $t('msg.excel.showRole')
             }}</el-button>
             <el-button
@@ -90,17 +90,21 @@
       >
       </el-pagination>
     </el-card>
+
+    <!-- 添加角色弹窗 -->
+    <role-dialog v-model="roleDialogVisible" :userId="selectUserId" @updateRole="getListData"></role-dialog>
   </div>
 </template>
 
 <script setup>
-import { ref, onActivated } from 'vue'
+import { ref, onActivated, watch } from 'vue'
 import { getUserManageList, deleteUser } from '@/api/user-manage'
 import { watchSwitchLang } from '@/utils/i18n'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { ElMessageBox, ElMessage } from 'element-plus'
 import ExportToExcel from './components/Export2Excel.vue'
+import RoleDialog from './components/role'
 
 // 页面加载
 //     ↓
@@ -181,9 +185,31 @@ const onTExcelClick = () => {
   exportToExcelVisible.value = true
 }
 
+// 展示用户详情事件
 const onShowClick = (id) => {
   router.push(`/user/info/${id}`)
 }
+
+// 为指定用户添加角色
+const roleDialogVisible = ref(false)
+const selectUserId = ref('')
+const onShowRoleClick = (row) => {
+  selectUserId.value = row._id
+  roleDialogVisible.value = true
+}
+// 弹窗关闭的时候 roleDialogVisible 的值 是 0 ，
+// 关闭之后 要重置 selectUserId 的值为空 ，
+// 因为有值的时候才调用获取数据，
+// 可以保证每次打开都可以重新获取数据
+watch(
+  roleDialogVisible,
+  val => {
+    if (!val) {
+      selectUserId.value = ''
+    }
+  }
+)
+
 </script>
 
 <style lang="scss" scoped>
