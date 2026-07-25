@@ -1,5 +1,9 @@
 // src/filters/index.js
 import dayjs from 'dayjs'
+import rt from 'dayjs/plugin/relativeTime'
+// 语言包
+import 'dayjs/locale/zh-cn'
+import store from '@/store'
 
 /**
  * 日期格式化函数（简洁版）
@@ -43,13 +47,24 @@ export const dateFormat = (date, format = 'YYYY-MM-DD HH:mm:ss') => {
     .replace('ss', seconds)
 }
 
+// 加载相对时间插件
+dayjs.extend(rt)
+function relativeTime (val) {
+  if (!isNaN(val)) {
+    val = parseInt(val)
+  }
+  return dayjs()
+    .locale(store.getters.language === 'zh' ? 'zh-cn' : 'en')
+    .to(dayjs(val))
+}
+
 // 使用 export const 支持具名导入（import { dateFormat } from '@/filters'）
 // 使用 export default 支持 Vue 插件注册（installFilters(app)）
-
 // ✅ 默认导出函数（匹配 main.js 的 installFilters(app)）
 export default function (app) {
   app.config.globalProperties.$filters = {
     dateFilter,
-    dateFormat
+    dateFormat,
+    relativeTime
   }
 }

@@ -19,7 +19,6 @@
         <!-- 姓名 -->
         <el-table-column prop="username" :label="$t('msg.excel.name')">
         </el-table-column>
-
         <!-- 手机 -->
         <el-table-column :label="$t('msg.excel.mobile')" prop="mobile">
         </el-table-column>
