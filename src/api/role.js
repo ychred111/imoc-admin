@@ -6,3 +6,10 @@ export const roleList = data => {
     url: '/role/list'
   })
 }
+
+// 获取角色权限
+export const rolePermission = roleId => {
+  return request({
+    url: `/role/permission/${roleId}`
+  })
+}
