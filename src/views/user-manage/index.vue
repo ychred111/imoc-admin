@@ -4,7 +4,7 @@
     <!-- 卡片1   导入导出按钮-->
     <el-card class="haeder">
       <div class="haeder-box" >
-        <el-button type="info" @click="onImportExcelClick">{{ $t('msg.excel.importExcel') }}</el-button>
+        <el-button type="info" @click="onImportExcelClick" v-permission="['importUser']">{{ $t('msg.excel.importExcel') }}</el-button>
         <el-button type="success" @click="onTExcelClick" >{{ $t('msg.excel.exportExcel') }}</el-button>
       </div>
     </el-card>
@@ -65,13 +65,14 @@
               @click="onShowClick(row._id)"
               >{{ $t('msg.excel.show') }}</el-button
             >
-            <el-button type="info" size="small" @click="onShowRoleClick(row)">{{
+            <el-button type="info" size="small" @click="onShowRoleClick(row)"  v-permission="['distributeRole']">{{
               $t('msg.excel.showRole')
             }}</el-button>
             <el-button
               type="danger"
               size="small"
               @click="onRemoveClick(row)"
+              v-permission="['removeUser']"
               >{{ $t('msg.excel.remove') }}</el-button
             >
           </template>

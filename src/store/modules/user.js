@@ -2,7 +2,7 @@ import { login, getUserInfo } from '@/api/sys'
 import md5 from 'md5'
 import { setItem, getItem, removeAllItem } from '@/utils/storage'
 import { TOKEN } from '@/constant/index'
-import router from '@/router'
+import router, { resetRouter } from '@/router'
 import { setTimeStamp } from '@/utils/auth'
 
 export default {
@@ -53,6 +53,8 @@ export default {
     // 清掉token跟用户信息
 
     logout () {
+      // 清除路由表
+      resetRouter()
       // 清除 state.token → 页面立即变为未登录状态
       // 清除 state.userInfo → 用户信息消失
       // 清除 localStorage → 刷新页面也不会恢复

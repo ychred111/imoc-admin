@@ -26,14 +26,22 @@ router.beforeEach(async (to, from, next) => {
   // console.log('当前路径:', to.path)
   // console.log('token:', lgoinToken)
   // console.log('目标路径是否在白名单:', whiteList.includes(to.path))
+  // 判断用户资料是否获取
+  // 如果不存在就需要获取用户信息
   if (lgoinToken) {
     if (to.path === '/login') {
       next('./')
     } else {
-      // 判断用户资料是否获取
-      // 如果不存在就需要获取用户信息
+      // 触发获取用户信息的action，并且获取用户当前权限
       if (!store.getters.hasUserInfo) {
-        await store.dispatch('user/getUserInfo')
+        const { permission } = await store.dispatch('user/getUserInfo')
+        // 处理用户权限，筛选出需要添加的权限
+        const filterRoutes = await store.dispatch('permission/filterRoutes', permission.menus)
+        // 利用addRoute循环添加
+        filterRoutes.forEach(item => {
+          router.addRoute(item)
+        })
+        return next(to.path)
       }
       next()
     }
