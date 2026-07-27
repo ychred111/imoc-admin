@@ -95,19 +95,3 @@ watch(
 )
 
 </script>
-
-<style scoped lang='scss'>
-/* 让选中的复选框更明显 */
-:deep(.el-checkbox) {
-  .el-checkbox__input.is-checked {
-    .el-checkbox__inner {
-      background-color: #409eff !important; /* 或你的主色 */
-      border-color: #409eff !important;
-    }
-    & + .el-checkbox__label {
-      color: #409eff !important; /* 文字也变色，更醒目 */
-      font-weight: bold;
-    }
-  }
-}
-</style>

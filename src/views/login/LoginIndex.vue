@@ -40,7 +40,7 @@
           </span>
         </div>
       </el-form-item>
-      <el-button type="primary" class="loginButton" @click="handleLogin">{{
+      <el-button type="info" class="loginButton" @click="handleLogin">{{
         $t('msg.login.loginBtn')
       }}</el-button>
       <div class="tips" v-html="$t('msg.login.desc')"></div>

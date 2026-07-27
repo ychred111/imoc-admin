@@ -1,53 +1,46 @@
 <template>
   <div class="article-ranking-container">
-    <e-card>
+    <el-card class="header">
+      <div class="dynamic-box">
+        <span class="title">{{ $t('msg.article.dynamicTitle') }}</span>
+        <el-checkbox-group v-model="selectDynamicLable">
+          <el-checkbox
+            v-for="(item, index) in dynamicData"
+            :value="item.label"
+            :key="index"
+            >{{ item.label }}</el-checkbox
+          >
+
+        </el-checkbox-group>
+      </div>
+    </el-card>
+    <el-card>
       <el-table ref="totalRef" :data="totalData" border>
         <el-table-column
-          prop="ranking"
-          :label="$t('msg.article.ranking')"
-          width="width"
+          v-for="(item, index) in tableColumn"
+          :key="index"
+          :prop="item.prop"
+          :label="item.label"
         >
-        </el-table-column>
-        <el-table-column
-          prop="title"
-          :label="$t('msg.article.title')"
-          width="width"
-        >
-        </el-table-column>
-        <el-table-column
-          prop="author"
-          :label="$t('msg.article.author')"
-          width="width"
-        >
-        </el-table-column>
-        <el-table-column
-          prop="publicDate"
-          :label="$t('msg.article.publicDate')"
-          width="width"
-        >
-          <template #default="{ row }">
+          <template #default="{ row }" v-if="item.prop === 'publicDate'">
             {{ $filters.relativeTime(row.publicDate) }}
           </template>
-        </el-table-column>
-        <el-table-column
-          prop="desc"
-          :label="$t('msg.article.desc')"
-          width="width"
-        >
+
+          <template #default="{ row }" v-else-if="item.prop === 'action'">
+            <el-button
+              :prop="action"
+              type="info"
+              size="small"
+              @click="onShowClick(row)"
+            >
+              {{ $t('msg.article.show') }}
+            </el-button>
+            <el-button type="danger" size="small" @click="onRemoveClick(row)">
+              {{ $t('msg.article.remove') }}
+            </el-button>
+          </template>
         </el-table-column>
         <!-- 按钮 -->
-        <el-table-column
-          prop="desc"
-          :label="$t('msg.article.desc')"
-          width="width"
-        >
-          <el-button type="info" size="small" @click="onShowClick(row)">
-            {{ $t('msg.article.show') }}
-          </el-button>
-          <el-button type="danger" size="small" @click="onRemoveClick(row)">
-            {{ $t('msg.article.remove') }}
-          </el-button>
-        </el-table-column>
       </el-table>
       <el-pagination
         class="pagination"
@@ -59,7 +52,7 @@
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
       ></el-pagination>
-    </e-card>
+    </el-card>
   </div>
 </template>
 
@@ -67,6 +60,8 @@
 import { ref } from 'vue'
 import { articleList } from '@/api/article'
 import { watchSwitchLang } from '@/utils/i18n'
+import { dynamicData, selectDynamicLable, tableColumn } from './dynamic/index'
+
 const page = ref(1)
 const size = ref(10)
 const total = ref(1)

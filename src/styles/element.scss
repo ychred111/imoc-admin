@@ -1,3 +1,16 @@
 .el-avatar {
   --el-avatar-background-color: none !important;
 }
+
+// .el-checkbox__input.is-checked .el-checkbox__inner {
+//   background-color: red !important;
+// }
+.el-checkbox__input.is-checked .el-checkbox__inner {
+  background-color: #409eff !important; /* 或你的主色 */
+  border-color: #409eff !important;
+}
+
+.el-checkbox__input.is-checked .el-checkbox__label {
+  color: #409eff !important; /* 文字也变色，更醒目 */
+  font-weight: bold;
+}
