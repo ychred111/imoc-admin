@@ -9,7 +9,7 @@ import './styles/index.scss'
 import installIcon from './icons'
 import store from './store/index.js'
 import './permission.js' // 导入导航守卫
-import i18n from './i8n/index.js'
+import i18n from './i18n/index.js'
 import installFilters from './filters'
 import print from 'vue3-print-nb'
 import installDirectives from '@/directives'

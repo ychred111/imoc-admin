@@ -1,4 +1,4 @@
-import i18n from '@/i8n'
+import i18n from '@/i18n'
 import { watch } from 'vue'
 import store from '@/store'
 

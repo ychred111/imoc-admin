@@ -15,7 +15,7 @@
       </div>
     </el-card>
     <el-card>
-      <el-table ref="totalRef" :data="totalData" border>
+      <el-table ref="tableRef"  :data="totalData" border>
         <el-table-column
           v-for="(item, index) in tableColumn"
           :key="index"
@@ -57,10 +57,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { articleList } from '@/api/article'
 import { watchSwitchLang } from '@/utils/i18n'
 import { dynamicData, selectDynamicLable, tableColumn } from './dynamic/index'
+import { tableRef, initSortable } from './sortable/index'
 
 const page = ref(1)
 const size = ref(10)
@@ -79,6 +80,10 @@ const getArticleList = async (data) => {
 getArticleList()
 watchSwitchLang(getArticleList)
 
+onMounted(() => {
+  initSortable(tableRef, getArticleList)
+})
+
 /**
  * size 改变触发
  */
@@ -94,6 +99,7 @@ const handleCurrentChange = (currentPage) => {
   page.value = currentPage
   getArticleList()
 }
+
 </script>
 
 <style lang="scss" scoped>
@@ -119,6 +125,7 @@ const handleCurrentChange = (currentPage) => {
     margin-top: 20px;
     text-align: center;
   }
+
 }
 
 ::v-deep .sortable-ghost {

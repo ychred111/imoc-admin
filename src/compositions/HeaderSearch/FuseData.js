@@ -14,7 +14,7 @@
 
 import path from 'path-browserify'
 // import i18n from '@i18n'
-import i18n from '@/i8n/index'
+import i18n from '@/i18n/index'
 
 /**
  * 筛选出可供搜索的路由对象

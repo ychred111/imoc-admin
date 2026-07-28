@@ -1,4 +1,4 @@
-import i18n from '@/i8n'
+import i18n from '@/i18n'
 
 export const validatorPassword = () => {
   return (rules, values, callback) => {
