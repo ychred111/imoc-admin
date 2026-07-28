@@ -11,31 +11,24 @@
 </template>
 
 <script setup>
-import { commitArticle } from '@/views/article-create/components/commit'
-import { defineProps, defineEmits, onMounted } from 'vue'
-import { useStore } from 'vuex'
 import MkEditor from '@toast-ui/editor'
 import '@toast-ui/editor/dist/toastui-editor.css'
 import '@toast-ui/editor/dist/i18n/zh-cn'
-import { watchSwitchLang } from '@/utils/i18n.js'
-
+import { onMounted, defineProps, defineEmits, watch } from 'vue'
+import { useStore } from 'vuex'
+import { watchSwitchLang } from '@/utils/i18n'
+import { commitArticle, editArticle } from './commit'
 const props = defineProps({
   title: {
-    type: String,
-    require: true
+    required: true,
+    type: String
+  },
+  detail: {
+    type: Object
   }
 })
 
-const emit = defineEmits(['onSuccess'])
-
-const onSubmitClick = async () => {
-  await commitArticle({
-    title: props.title,
-    content: mkEditor
-  })
-  mkEditor.reset()
-  emit('onSuccess')
-}
+const emits = defineEmits(['onSuccess'])
 
 // 初始化editor
 // Editor实例
@@ -59,16 +52,51 @@ const initEditor = () => {
   mkEditor.getMarkdown()
 }
 
+// 监听语言变化
 watchSwitchLang(() => {
   if (!el) return
-  const htmlStr = mkEditor.getHtml()
+  const htmlStr = mkEditor.getHTML()
   mkEditor.destroy()
   initEditor()
-  mkEditor.seHTML(htmlStr)
+  mkEditor.setHTML(htmlStr)
 })
 
+// 编辑相关
+watch(
+  () => props.detail,
+  val => {
+    if (val && val.content) {
+      mkEditor.setHTML(val.content)
+    }
+  },
+  {
+    immediate: true
+  }
+)
+
+// 处理提交
+const onSubmitClick = async () => {
+  if (props.detail && props.detail._id) {
+    // 编辑文章
+    await editArticle({
+      id: props.detail._id,
+      title: props.title,
+      content: mkEditor.getHTML()
+    })
+  } else {
+    // 创建文章
+    await commitArticle({
+      title: props.title,
+      content: mkEditor.getHTML()
+    })
+  }
+
+  mkEditor.reset()
+  emits('onSuccess')
+}
 </script>
-<style scoped lang='scss'>
+
+<style lang="scss" scoped>
 .markdown-container {
   .bottom {
     margin-top: 20px;
