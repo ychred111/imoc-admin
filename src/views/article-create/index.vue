@@ -62,4 +62,26 @@ if (articleId) {
 .title-input {
   margin-bottom: 20px;
 }
+
+/* 给当前激活的 tab 添加样式 */
+:deep(.el-tabs__item.is-active) {
+  color: #409eff !important;
+  font-weight: 600;
+}
+
+/* 也可以添加下划线动画颜色 */
+:deep(.el-tabs__active-bar) {
+  background-color: #409eff;
+}
+
+/* 如果 tab 需要背景色 */
+// :deep(.el-tabs__item.is-active) {
+//   background: rgba(64, 158, 255, 0.1);
+//   border-radius: 4px 4px 0 0;
+// }
+
+/* 鼠标悬停效果 */
+// :deep(.el-tabs__item:hover) {
+//   color: #409eff;
+// }
 </style>
