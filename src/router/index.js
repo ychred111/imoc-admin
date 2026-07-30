@@ -49,6 +49,16 @@ export const publicRoutes = [
           icon: 'el-icon-user'
         }
       },
+      // 数据可视化
+      {
+        path: '/chart',
+        name: 'chart',
+        component: () => import('@/views/chart/index.vue'),
+        meta: {
+          title: 'chart',
+          icon: 'chart'
+        }
+      },
       // 404
       {
         path: '/404',
@@ -62,16 +72,8 @@ export const publicRoutes = [
         component: () => import('@/views/error-page/401')
       }
     ]
-  },
-  {
-    path: '/chart',
-    name: 'chart',
-    component: () => import('@/views/chart/index.vue'),
-    meta: {
-      title: 'chart',
-      icon: 'chart'
-    }
   }
+
 ]
 
 /**

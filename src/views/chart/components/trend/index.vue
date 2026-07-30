@@ -2,13 +2,14 @@
   <!-- 累计收益趋势图 -->
   <el-card class="container" >
     <el-row :gutter="10" v-if="chartTrendData.allAmount">
-      <el-col :span="6">
+      <el-col :span="6"  >
         <!-- 数据模块 -->
         <trend-data :data="chartTrendData" ></trend-data>
       </el-col>
-      <el-col :span="18">
+      <el-col :span="1"></el-col>
+      <el-col  :span="17">
         <!-- 图表模块 -->
-        <trend-chart></trend-chart>
+        <trend-chart :data="chartTrendData"></trend-chart>
       </el-col>
     </el-row>
   </el-card>
@@ -32,4 +33,5 @@ getChartTrendData()
 .container {
   height: 286px;
 }
+
 </style>
