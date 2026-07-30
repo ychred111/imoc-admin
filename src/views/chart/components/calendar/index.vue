@@ -51,7 +51,7 @@ const calendarListData = ref([])
 const getCalendarListData = async () => {
   const { result } = await getChartCalendar()
   calendarListData.value = result
-  console.log(calendarListData.value)
+  // console.log(calendarListData.value)
 }
 
 // 收益缓存数据。
