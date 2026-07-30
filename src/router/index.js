@@ -12,6 +12,7 @@ import ArticleCreaterRouter from './modules/ArticleCreate'
 import layout from '@/views/layout/LayoutIndex.vue'
 import path from 'path-browserify'
 import store from '@/store/index'
+// import { name } from 'dayjs/locale/zh-cn'
 
 // 私有路由表
 /**
@@ -32,6 +33,7 @@ export const publicRoutes = [
     path: '/login',
     component: () => import('@/views/login/LoginIndex.vue')
   },
+
   {
     path: '/',
     component: layout,
@@ -60,6 +62,15 @@ export const publicRoutes = [
         component: () => import('@/views/error-page/401')
       }
     ]
+  },
+  {
+    path: '/chart',
+    name: 'chart',
+    component: () => import('@/views/chart/index.vue'),
+    meta: {
+      title: 'chart',
+      icon: 'chart'
+    }
   }
 ]
 
