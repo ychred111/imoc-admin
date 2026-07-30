@@ -21,7 +21,7 @@ import { getChartPie } from '@/api/chart'
 // 2. 导入 Echarts 模块
 import * as echarts from 'echarts'
 import { useI18n } from 'vue-i18n'
-// import { watchSwitchLang } from '@/utils/i18n'
+import { watchSwitchLang } from '@/utils/i18n'
 
 const i18n = useI18n()
 // 获取数据
@@ -29,7 +29,7 @@ const chartData = ref([])
 const getChartData = async () => {
   const reslut = await getChartPie()
   chartData.value = reslut
-  console.log(reslut)
+  // console.log(reslut)
   renderChart()
 }
 getChartData()
@@ -90,6 +90,8 @@ const renderChart = () => {
   }
   mChart.setOption(options)
 }
+
+watchSwitchLang(getChartData)
 
 </script>
 <style scoped lang='scss'>

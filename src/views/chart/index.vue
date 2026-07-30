@@ -23,7 +23,7 @@
             <!-- 饼图 -->
           <pie-Vue></pie-Vue>
           <!-- 文档云图 -->
-          <wordCloud-Vue class="mt-20"></wordCloud-Vue>
+          <wordCloud-Vue ></wordCloud-Vue>
           </div>
         </el-col>
         <el-col :span="18">
