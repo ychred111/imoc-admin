@@ -177,7 +177,7 @@ const data = ref([])
 const getData = async date => {
   const { result } = await getChartTimeAmount(date)
   data.value = result
-  console.log(data.value)
+  // console.log(data.value)
   renderChart(new Date())
 }
 getData()
