@@ -23,6 +23,8 @@ import * as echarts from 'echarts'
 // 国际化相关
 import { useI18n } from 'vue-i18n'
 import { watchSwitchLang } from '@/utils/i18n'
+import emitter from '@/utils/eventHub'
+
 const i18n = useI18n()
 
 // 3. 利用 echarts.init(target) 方法，获取 mChart 实例
@@ -176,9 +178,13 @@ const getData = async date => {
   const { result } = await getChartTimeAmount(date)
   data.value = result
   console.log(data.value)
-  renderChart()
+  renderChart(new Date())
 }
 getData()
+
+emitter.on('calendarChanger', val => {
+  getData(val)
+})
 
 </script>
 <style scoped lang='scss'>

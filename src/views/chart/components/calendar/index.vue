@@ -32,8 +32,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { getChartCalendar } from '@/api/chart'
+import emitter from '@/utils/eventHub'
 // 选中的日期
 const currentDate = ref(new Date())
 
@@ -92,6 +93,10 @@ const calendarItemBgClass = day => {
   }
   return ''
 }
+
+watch(currentDate, val => {
+  emitter.emit('calendarChanger', val)
+})
 
 </script>
 
