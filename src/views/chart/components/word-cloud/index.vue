@@ -33,7 +33,7 @@ const wordCloudData = ref([])
 const getChartData = async () => {
   const reslut = await getChartWordCloud()
   wordCloudData.value = reslut
-  console.log(reslut)
+  // console.log(reslut)
   renderChart()
 }
 getChartData()
